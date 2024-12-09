@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Login | AirBnB Finder</title>
   <!-- Link to external stylesheet -->
   <link rel="stylesheet" href="/public/css/style.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     /* General Reset */
     * {
@@ -16,16 +17,19 @@
     }
 
     body {
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
-      background-color: #f4f4f4;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       color: #333;
     }
 
-    /* Header Style */
     header {
-      background-color: #333;
+      background: linear-gradient(to right, #007BFF, #0056b3);
       padding: 20px;
+      text-align: center;
+      color: white;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -33,152 +37,172 @@
 
     header nav {
       display: flex;
-      justify-content: space-around;
-      align-items: center;
+      justify-content: center;
+      gap: 20px;
     }
 
     header nav a {
       color: white;
       text-decoration: none;
-      font-size: 1.1rem;
-      padding: 10px 20px;
-      border-radius: 5px;
-    }
-
-    header nav a:hover {
-      background-color: #4CAF50;
+      font-size: 1rem;
+      padding: 8px 16px;
+      border-radius: 4px;
       transition: background-color 0.3s ease;
     }
 
-    /* Main Content Area */
+    header nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
     main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       padding: 30px;
-      max-width: 600px;
-      margin: 50px auto;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
     }
 
     h1 {
       text-align: center;
+      font-size: 2rem;
+      color: #007BFF;
       margin-bottom: 20px;
-      color: #333;
     }
 
-    /* Form Styling */
-    form div {
-      margin-bottom: 15px;
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
-    form label {
-      display: block;
-      font-size: 1rem;
-      margin-bottom: 5px;
+    label {
+      font-weight: bold;
+      font-size: 0.9rem;
+      color: #555;
     }
 
-    form input {
-      width: 100%;
+    input {
       padding: 10px;
       font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      transition: border-color 0.3s;
     }
 
-    form button {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
+    input:focus {
+      border-color: #007BFF;
+      outline: none;
+    }
+
+    button {
+      background: #007BFF;
       color: white;
-      background-color: #333;
+      padding: 10px 15px;
+      font-size: 1rem;
+      font-weight: bold;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s;
     }
 
-    form button:hover {
-      background-color: #4CAF50;
+    button:hover {
+      background: #0056b3;
     }
 
-    form p {
+    .error-message {
+      color: red;
+      font-size: 0.9rem;
       text-align: center;
     }
 
-    form p a {
-      color: #333;
-      text-decoration: none;
+    .forgot-password {
+      text-align: center;
     }
 
-    form p a:hover {
+    .forgot-password a {
+      color: #007BFF;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .forgot-password a:hover {
       text-decoration: underline;
     }
 
-    /* Footer Style */
     footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #333;
+      background: #333;
       color: white;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
     }
 
-    /* Responsive Design */
     @media (max-width: 768px) {
       header nav {
         flex-direction: column;
-        align-items: flex-start;
+        gap: 10px;
       }
 
-      header nav a {
-        margin-bottom: 10px;
+      .login-container {
+        width: 90%;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
       }
     }
   </style>
 </head>
+
 <body>
   <header>
     <nav>
-      <a href="/">Home</a>
-      <a href="/airbnbSearch">Search AirBnBs</a>
-      <a href="/all-data">View All Listings</a>
-      <a href="/login">Login</a> <!-- Link to Login page -->
-      <a href="/edit/{{airbnb._id}}">Edit Listing</a> <!-- Corrected link to Edit Listing page -->
+      <a href="/">Home</a> <!-- Route for homepage -->
+      <a href="/search">Search AirBnBs</a> <!-- Route for search page -->
+      <a href="/add-new">Add New Listing</a> <!-- Route for adding a new listing -->
+      <a href="/login">Login</a> <!-- Route for login page -->
     </nav>
   </header>
 
   <main>
-    <h1>Login</h1>
-    <form action="/login" method="POST">
-      <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
+    <div class="login-container">
+      <h1>Login</h1>
+      <form action="/login" method="POST">
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <p class="forgot-password"><a href="/forgot-password">Forgot your password?</a></p>
+      {{#if errors}}
+      <div class="error-message">
+        {{#each errors}}
+        <p>{{this.msg}}</p>
+        {{/each}}
       </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-      </div>
-      <button type="submit">Login</button>
-      <p><a href="/forgot-password">Forgot your password?</a></p>
-    </form>
+      {{/if}}
+    </div>
   </main>
 
   <footer>
-    <p>© 2024 AirBnB Finder</p>
+    <p>&copy; 2024 AirBnB Finder. All Rights Reserved.</p>
   </footer>
-
-  <!-- External Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lightbox2/dist/js/lightbox.min.js"></script>
-
-  <script>
-    $(document).ready(function() {
-      $('#location').select2();  // Initialize Select2 for location dropdown (if used in your forms)
-    });
-  </script>
 </body>
+
 </html>

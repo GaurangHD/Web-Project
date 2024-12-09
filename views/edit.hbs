@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit AirBnB Listing</title>
-  <link rel="stylesheet" href="/public/css/style.css">
+  <title>Edit Listing | AirBnB Finder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     /* General Reset */
     * {
@@ -14,149 +14,149 @@
     }
 
     body {
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
-      background-color: #f4f4f4;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #f8f9fa, #e9ecef);
       color: #333;
-    }
-
-    /* Header Style */
-    header {
-      background-color: #333;
-      padding: 20px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    header nav {
+      min-height: 100vh;
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       align-items: center;
+      padding: 20px;
     }
 
-    header nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.1rem;
-      padding: 10px 20px;
-      border-radius: 5px;
-    }
-
-    header nav a:hover {
-      background-color: #4CAF50;
-      transition: background-color 0.3s ease;
-    }
-
-    /* Main Content Area */
-    main {
-      padding: 30px;
-      max-width: 900px;
-      margin: 50px auto;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .form-container {
+      background: #fff;
+      border-radius: 15px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease;
     }
 
     h1 {
       text-align: center;
+      font-size: 2rem;
       margin-bottom: 20px;
-      color: #333;
+      color: #007BFF;
     }
 
-    /* Form Styling */
     form {
       display: flex;
       flex-direction: column;
+      gap: 20px;
     }
 
     label {
-      margin-bottom: 8px;
       font-weight: bold;
+      color: #555;
+      margin-bottom: 5px;
+      font-size: 1rem;
     }
 
     input {
-      margin-bottom: 20px;
-      padding: 10px;
+      padding: 12px;
       font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #007BFF;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      outline: none;
     }
 
     button {
-      padding: 10px;
-      background-color: #333;
+      background: linear-gradient(to right, #007BFF, #0056b3);
       color: white;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: bold;
       border: none;
-      border-radius: 5px;
-      font-size: 1.1rem;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     button:hover {
-      background-color: #4CAF50;
+      background: linear-gradient(to right, #0056b3, #004085);
+      transform: scale(1.02);
     }
 
-    /* Footer Style */
-    footer {
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
       text-align: center;
-      padding: 10px;
-      background-color: #333;
-      color: white;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+      font-size: 1rem;
+      text-decoration: none;
+      color: #007BFF;
+      transition: color 0.3s ease, transform 0.2s;
     }
 
-    /* Responsive Design */
+    .back-link:hover {
+      color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    .form-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
     @media (max-width: 768px) {
-      header nav {
-        flex-direction: column;
-        align-items: flex-start;
+      .form-container {
+        width: 100%;
+        padding: 30px;
       }
 
-      header nav a {
-        margin-bottom: 10px;
-      }
-
-      form {
-        padding: 15px;
+      h1 {
+        font-size: 1.8rem;
       }
 
       input, button {
         font-size: 0.9rem;
       }
     }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/all-data">View All Listings</a>
-    </nav>
-  </header>
-
-  <main>
+  <div class="form-container">
     <h1>Edit Listing</h1>
+    <form action="/edit/{{listing._id}}" method="POST">
+      <label for="name">Listing Name:</label>
+      <input type="text" id="name" name="name" value="{{listing.name}}" placeholder="Enter listing name" required />
 
-    <form action="/update/{{listing._id}}" method="POST">
-      <label for="name">Name</label>
-      <input type="text" name="name" id="name" value="{{listing.name}}" required>
+      <label for="price">Price (per night):</label>
+      <input type="number" id="price" name="price" value="{{listing.price}}" placeholder="Enter price" required />
 
-      <label for="city">City</label>
-      <input type="text" name="city" id="city" value="{{listing.address.city}}" required>
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" value="{{listing.location}}" placeholder="Enter location" required />
 
-      <label for="price">Price</label>
-      <input type="number" name="price" id="price" value="{{listing.price}}" required>
+      <label for="address_street">Street Address:</label>
+      <input type="text" id="address_street" name="address.street" value="{{listing.address.street}}" placeholder="Enter street address" required />
+
+      <label for="address_suburb">Suburb:</label>
+      <input type="text" id="address_suburb" name="address.suburb" value="{{listing.address.suburb}}" placeholder="Enter suburb" required />
+
+      <label for="address_country">Country:</label>
+      <input type="text" id="address_country" name="address.country" value="{{listing.address.country}}" placeholder="Enter country" required />
 
       <button type="submit">Save Changes</button>
     </form>
-  </main>
-
-  <footer>
-    <p>© 2024 AirBnB Finder</p>
-  </footer>
+    <a href="/all-data" class="back-link">Cancel and go back</a>
+  </div>
 </body>
 </html>

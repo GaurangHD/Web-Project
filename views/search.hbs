@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #eef2f3, #8e9eab);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(to right, #007BFF, #0056b3);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    header nav a:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    .search-container {
+      flex: 1;
+      background: white;
+      max-width: 600px;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+      margin: 40px auto;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .search-container:hover {
+      transform: scale(1.01);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      color: #007BFF;
+      font-weight: bold;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    label {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input {
+      padding: 12px 15px;
+      font-size: 1.1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus {
+      border-color: #007BFF;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+
+    button {
+      padding: 15px 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(to right, #28a745, #218838);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #218838, #1e7e34);
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: linear-gradient(to right, #007BFF, #0056b3);
+      color: white;
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 1rem;
+      margin-top: auto;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      header nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .search-container {
+        width: 90%;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a> <!-- Route for homepage -->
+      <a href="/search">Search AirBnBs</a> <!-- Route for search page -->
+      <a href="/add-new">Add New Listing</a> <!-- Route for adding a new listing -->
+      <a href="/login">Login</a> <!-- Route for login page -->
+    </nav>
+  </header>
+
+  <div class="search-container">
+    <h1>{{title}}</h1>
+    <form action="/search-results" method="POST">
+      <label for="page">Page:</label>
+      <input type="number" name="page" id="page" value="1" required>
+
+      <label for="perPage">Results Per Page:</label>
+      <input type="number" name="perPage" id="perPage" value="5" required>
+
+      <label for="minimum_nights">Minimum Nights:</label>
+      <input type="number" name="minimum_nights" id="minimum_nights">
+
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 AirBnB Finder. All Rights Reserved.</p>
+  </footer>
+</body>
+
+</html>
