@@ -79,9 +79,9 @@ button[type="submit"]:hover {
 </head>
 
 <main>
-  <h1>{{formTitle}}</h1> <!-- Dynamic title for Add or Edit -->
+  <h1>Add Listing</h1> <!-- Dynamic title for Add or Edit -->
 
-  <form action="{{actionUrl}}" method="POST">
+  <form action="/api/AirBnBs" method="POST">
     <!-- Section 1: Basic Information -->
     <div class="form-section">
       <h2>Basic Information</h2>
@@ -217,6 +217,6 @@ button[type="submit"]:hover {
         {{#if host_is_superhost}}checked{{/if}}><br><br>
     </div>
 
-    <button type="submit">{{buttonText}}</button>
+    <button type="submit" >Add Listing</button>
   </form>
 </main>

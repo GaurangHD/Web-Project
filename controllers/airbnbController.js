@@ -132,8 +132,17 @@ const addNewAirBnB = async (req, res) => {
 
 // Get all AirBnBs with pagination and optional filtering
 const getAllAirBnBs = async (req, res) => {
-  const { page = 1, perPage = 6, minimum_nights } = req.query;
-  const query = minimum_nights ? { minimum_nights: minimum_nights } : {};
+  const { page = 1, perPage = 6, minimum_nights, search } = req.query;
+
+  // Build the base query
+  const query = {};
+  if (minimum_nights) query.minimum_nights = minimum_nights;
+
+  // Add search filter for name
+  if (search) {
+    query.name = { $regex: search, $options: "i" }; // Case-insensitive search
+  }
+  // const query = minimum_nights ? { minimum_nights: minimum_nights } : {};
   try {
     const airbnbs = await AirBnB.find(query)
       .skip((page - 1) * perPage)

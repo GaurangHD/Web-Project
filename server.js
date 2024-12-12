@@ -70,6 +70,9 @@ app.use((req, res, next) => {
 // Routes
 app.use("/", airbnbRoutes);
 app.use('/api/users', userRoutes);
+app.use((req, res, next) => {
+  res.render('404');
+});
 // Connect to Database and Start Server
 connectToDB()
   .then(() => {

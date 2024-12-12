@@ -1,3 +1,21 @@
+<div class="row mb-4">
+  <div class="col-12">
+    <form class="d-flex justify-content-center align-items-center" method="GET" action="/api/AirBnBs">
+      <input
+        type="text"
+        name="search"
+        id="search"
+        class="form-control mr-2"
+        style="width: 300px;"
+        value="{{search}}"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+</div>
+
 <div class="row">
   {{#each airbnbs}}
   <div class="col-md-4 mb-4">
