@@ -27,6 +27,7 @@
     "mongodb": "^6.11.0",
     "mongoose": "^8.8.3",
     "multer": "^1.4.5-lts.1",
+    "nodemin": "^1.0.1",
     "select2": "^4.1.0-rc.0"
   },
   "devDependencies": {
