@@ -1,0 +1,222 @@
+<head>
+<style>
+/* General Body Styles */
+/* Main Form Layout */
+main {
+  padding: 20px;
+}
+
+form {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+input[type="text"], input[type="number"], input[type="checkbox"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+  width: auto;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+  margin-top: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  form {
+    padding: 15px;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  footer {
+    position: relative;
+  }
+}
+</style>
+</head>
+
+<main>
+  <h1>{{formTitle}}</h1> <!-- Dynamic title for Add or Edit -->
+
+  <form action="{{actionUrl}}" method="POST">
+    <!-- Section 1: Basic Information -->
+    <div class="form-section">
+      <h2>Basic Information</h2>
+      <label for="listing_url">Listing URL:</label>
+      <input 
+        type="text" 
+        id="listing_url" 
+        name="listing_url" 
+        value="{{listing_url}}" 
+        required><br><br>
+
+      <label for="name">Name:</label>
+      <input 
+        type="text" 
+        id="name" 
+        name="name" 
+        value="{{name}}" 
+        required><br><br>
+
+      <label for="summary">Summary:</label>
+      <input 
+        type="text" 
+        id="summary" 
+        name="summary" 
+        value="{{summary}}"><br><br>
+    </div>
+
+    <!-- Section 2: Property Details -->
+    <div class="form-section">
+      <h2>Property Details</h2>
+      <label for="property_type">Property Type:</label>
+      <input 
+        type="text" 
+        id="property_type" 
+        name="property_type" 
+        value="{{property_type}}"><br><br>
+
+      <label for="room_type">Room Type:</label>
+      <input 
+        type="text" 
+        id="room_type" 
+        name="room_type" 
+        value="{{room_type}}"><br><br>
+
+      <label for="bed_type">Bed Type:</label>
+      <input 
+        type="text" 
+        id="bed_type" 
+        name="bed_type" 
+        value="{{bed_type}}"><br><br>
+
+      <label for="minimum_nights">Minimum Nights:</label>
+      <input 
+        type="number" 
+        id="minimum_nights" 
+        name="minimum_nights" 
+        value="{{minimum_nights}}" 
+        required><br><br>
+
+      <label for="maximum_nights">Maximum Nights:</label>
+      <input 
+        type="number" 
+        id="maximum_nights" 
+        name="maximum_nights" 
+        value="{{maximum_nights}}"><br><br>
+
+      <label for="cancellation_policy">Cancellation Policy:</label>
+      <input 
+        type="text" 
+        id="cancellation_policy" 
+        name="cancellation_policy" 
+        value="{{cancellation_policy}}"><br><br>
+    </div>
+
+    <!-- Section 3: Pricing & Host Information -->
+    <div class="form-section">
+      <h2>Pricing & Host Information</h2>
+      <label for="price">Price:</label>
+      <input 
+        type="number" 
+        id="price" 
+        name="price" 
+        value="{{price}}"><br><br>
+
+      <label for="security_deposit">Security Deposit:</label>
+      <input 
+        type="number" 
+        id="security_deposit" 
+        name="security_deposit" 
+        value="{{security_deposit}}"><br><br>
+
+      <label for="cleaning_fee">Cleaning Fee:</label>
+      <input 
+        type="number" 
+        id="cleaning_fee" 
+        name="cleaning_fee" 
+        value="{{cleaning_fee}}"><br><br>
+
+      <label for="extra_people">Extra People:</label>
+      <input 
+        type="number" 
+        id="extra_people" 
+        name="extra_people" 
+        value="{{extra_people}}"><br><br>
+
+      <label for="guests_included">Guests Included:</label>
+      <input 
+        type="number" 
+        id="guests_included" 
+        name="guests_included" 
+        value="{{guests_included}}"><br><br>
+
+      <label for="host_name">Host Name:</label>
+      <input 
+        type="text" 
+        id="host_name" 
+        name="host_name" 
+        value="{{host_name}}" 
+        required><br><br>
+
+      <label for="host_location">Host Location:</label>
+      <input 
+        type="text" 
+        id="host_location" 
+        name="host_location" 
+        value="{{host_location}}"><br><br>
+
+      <label for="host_is_superhost">Is Host Superhost?</label>
+      <input 
+        type="checkbox" 
+        id="host_is_superhost" 
+        name="host_is_superhost" 
+        {{#if host_is_superhost}}checked{{/if}}><br><br>
+    </div>
+
+    <button type="submit">{{buttonText}}</button>
+  </form>
+</main>

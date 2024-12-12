@@ -1,49 +1,204 @@
-<section>  
-  <h1>{{listing.name}}</h1>
-</section>
+<head>
+  <style><style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+  }
 
-<section class="images">
-  <img src="{{listing.images.picture_url}}" alt="{{listing.name}}" />
-</section>
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px 16px;
+  }
 
-<section class="details">
-  <h2>Details</h2>
-  <ul>
-    <li><strong>Description:</strong> {{listing.description}}</li>
-    <li><strong>Space:</strong> {{listing.space}}</li>
-    <li><strong>Neighborhood Overview:</strong> {{listing.neighborhood_overview}}</li>
-    <li><strong>House Rules:</strong> {{listing.house_rules}}</li>
-    <li><strong>Property Type:</strong> {{listing.property_type}}</li>
-    <li><strong>Room Type:</strong> {{listing.room_type}}</li>
-    <li><strong>Bed Type:</strong> {{listing.bed_type}}</li>
-    <li><strong>Price:</strong> ${{listing.price}}</li>
-    <li><strong>Amenities:</strong> 
-      {{#each listing.amenities}}
-        <span>{{this}}</span>
-      {{/each}}
-    </li>
-  </ul>
-</section>
+  th {
+    background-color: #f4f4f4;
+    color: #333;
+  }
 
-<section class="host-info">
-  <h2>Host Information</h2>
-  <ul>
-    <li><strong>Name:</strong> {{listing.host.host_name}}</li>
-    <li><strong>Location:</strong> {{listing.host.host_location}}</li>
-    <li><strong>About:</strong> {{listing.host.host_about}}</li>
-    <li><strong>Response Time:</strong> {{listing.host.host_response_time}}</li>
-    <li><strong>Response Rate:</strong> {{listing.host.host_response_rate}}%</li>
-    <li><strong>Superhost:</strong> {{#if listing.host.host_is_superhost}}Yes{{else}}No{{/if}}</li>
-  </ul>
-</section>
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
 
-<section class="address">
-  <h2>Address</h2>
-  <ul>
-    <li><strong>Street:</strong> {{listing.address.street}}</li>
-    <li><strong>Suburb:</strong> {{listing.address.suburb}}</li>
-    <li><strong>Government Area:</strong> {{listing.address.government_area}}</li>
-    <li><strong>Market:</strong> {{listing.address.market}}</li>
-    <li><strong>Country:</strong> {{listing.address.country}} ({{listing.address.country_code}})</li>
-  </ul>
-</section>
+  tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  td img {
+    display: block;
+    max-width: 100px;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .button-container {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .button-container button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    margin: 5px 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .button-container button:hover {
+    background-color: #0056b3;
+  }
+</style>
+<script>
+  async function deleteListing(listingId) {
+    
+    const confirmation = confirm("Are you sure you want to delete this listing?");
+    if (!confirmation) return;
+
+    try {
+      const response = await fetch(`/api/AirBnBs/${listingId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        alert("Listing deleted successfully.");
+        // Optionally reload the page or update the UI dynamically
+    window.location.href = '/api/airbnbs';
+      } else {
+        const error = await response.json();
+        alert(`Error: ${error.error}`);
+      }
+    } catch (err) {
+      console.error("Failed to delete listing:", err);
+    }
+
+  }
+
+
+</script>
+</head>
+<div class="button-container">
+  <form action="/api/airbnbs/edit/{{listing._id}}" method="get">
+    <button >Edit</button>
+  </form>
+  {{#if userToken}}
+  <button onclick="deleteListing('{{listing._id}}')">Delete</button> 
+  {{/if}}
+  <a href="/api/AirBnBs/fees/{{listing._id}}" class="button">Reserve</a>
+</div>
+
+<table border="1" cellspacing="0" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Listing Section -->
+    <tr>
+      <td>Listing Name</td>
+      <td>{{listing.name}}</td>
+    </tr>
+    <tr>
+      <td>Picture</td>
+      <td><img src="{{listing.images.picture_url}}" alt="{{listing.name}}" width="100" /></td>
+    </tr>
+    
+    <!-- Details Section -->
+    <tr>
+      <td>Description</td>
+      <td>{{listing.description}}</td>
+    </tr>
+    <tr>
+      <td>Space</td>
+      <td>{{listing.space}}</td>
+    </tr>
+    <tr>
+      <td>Neighborhood Overview</td>
+      <td>{{listing.neighborhood_overview}}</td>
+    </tr>
+    <tr>
+      <td>House Rules</td>
+      <td>{{listing.house_rules}}</td>
+    </tr>
+    <tr>
+      <td>Property Type</td>
+      <td>{{listing.property_type}}</td>
+    </tr>
+    <tr>
+      <td>Room Type</td>
+      <td>{{listing.room_type}}</td>
+    </tr>
+    <tr>
+      <td>Bed Type</td>
+      <td>{{listing.bed_type}}</td>
+    </tr>
+    <tr>
+      <td>Price</td>
+      <td>${{listing.price}}</td>
+    </tr>
+    <tr>
+      <td>Amenities</td>
+      <td>
+        {{#each listing.amenities}}
+          <span>{{this}}</span>
+        {{/each}}
+      </td>
+    </tr>
+    
+    <!-- Host Info Section -->
+    <tr>
+      <td>Host Name</td>
+      <td>{{listing.host.host_name}}</td>
+    </tr>
+    <tr>
+      <td>Host Location</td>
+      <td>{{listing.host.host_location}}</td>
+    </tr>
+    <tr>
+      <td>About Host</td>
+      <td>{{listing.host.host_about}}</td>
+    </tr>
+    <tr>
+      <td>Response Time</td>
+      <td>{{listing.host.host_response_time}}</td>
+    </tr>
+    <tr>
+      <td>Response Rate</td>
+      <td>{{listing.host.host_response_rate}}%</td>
+    </tr>
+    <tr>
+      <td>Superhost</td>
+      <td>{{#if listing.host.host_is_superhost}}Yes{{else}}No{{/if}}</td>
+    </tr>
+    
+    <!-- Address Section -->
+    <tr>
+      <td>Street</td>
+      <td>{{listing.address.street}}</td>
+    </tr>
+    <tr>
+      <td>Suburb</td>
+      <td>{{listing.address.suburb}}</td>
+    </tr>
+    <tr>
+      <td>Government Area</td>
+      <td>{{listing.address.government_area}}</td>
+      <td>
+    </tr>
+    <tr>
+      <td>Market</td>
+      <td>{{listing.address.market}}</td>
+    </tr>
+    <tr>
+      <td>Country</td>
+      <td>{{listing.address.country}} ({{listing.address.country_code}})</td>
+    </tr>
+  </tbody>
+</table>
+

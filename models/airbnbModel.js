@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
+
 
 const airbnbSchema = new mongoose.Schema({
-  _id: { type: String, required: true },  // _id is required
+  _id: { type: String, default: uuidv4 },
   listing_url: { type: String, default: null },
   name: { type: String, default: null },
   summary: { type: String, default: null },

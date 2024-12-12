@@ -35,7 +35,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view options", { layout: "layout/main" });
 
 // Register HBS Partials and Helpers
-hbs.registerPartials(path.join(__dirname, "views", "partials"));
+hbs.registerPartials(path.join(__dirname, "views", "partial"));
 
 hbs.registerHelper("eq", (a, b) => (a === b ? "selected" : ""));
 hbs.registerHelper("joinAmenities", (amenities) => amenities.join(", "));
@@ -59,6 +59,13 @@ hbs.registerHelper('lt', function(a, b) {
   return a < b ? true : false;  // Return true if a < b, otherwise false
 });
 
+app.use((req, res, next) => {
+  // Extract the token from cookies
+  const token = req.cookies['token']; // Replace 'authToken' with your token's cookie name
+
+  res.locals.userToken = token || null; // Pass it to views, or null if not present
+  next();
+});
 
 // Routes
 app.use("/", airbnbRoutes);

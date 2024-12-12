@@ -19,12 +19,7 @@ const registerUser = async (req, res) => {
     const user = new User({ name, email, password });
     await user.save();
 
-    // If the request is from the API, respond with JSON
-    if (req.xhr || req.accepts('json')) {
-      return res.status(201).json({ message: 'User registered successfully' });
-    }
-
-    // If the request is from the view (form submission), render the registration success page
+    
     res.render('login', { message: 'Registration successful! Please login.' });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -48,13 +43,8 @@ const loginUser = async (req, res) => {
     // Set token in cookies
     res.cookie('token', token, { ...COOKIE_OPTIONS, maxAge: 3600000 });
 
-    // If the request is from the API, return the token
-    if (req.xhr || req.accepts('json')) {
-      return res.status(200).json({ message: 'Login successful', user: { id: user._id, name: user.name, email: user.email }, token });
-    }
-
-    // If the request is from the view (form submission), render the home page or dashboard
-    res.redirect('/dashboard'); // Adjust the redirect path to your app's dashboard or homepage
+    
+    res.redirect('/api/airbnbs');
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
@@ -64,13 +54,9 @@ const loginUser = async (req, res) => {
 const logoutUser = (req, res) => {
   res.clearCookie('token', COOKIE_OPTIONS);
   
-  // If the request is from the API, send a JSON response
-  if (req.xhr || req.accepts('json')) {
-    return res.status(200).json({ message: 'Logout successful' });
-  }
 
   // If the request is from the view, render the login page
-  res.redirect('/login'); // Adjust this redirect to your login page
+  res.redirect('/api/users/login'); // Adjust this redirect to your login page
 };
 
 // Render Register page

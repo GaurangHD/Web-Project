@@ -1,0 +1,12 @@
+<nav style="background: #f8f9fa; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+  <a href="/api/airbnbs" style="text-decoration: none; color: #333; font-size: 18px; font-weight: bold;">MyApp</a>
+  <div>
+    {{#if userToken}}
+      <a href="/api/AirBnBs/add" style="text-decoration: none; margin-right: 15px; color: #007bff;">Create Listing</a>
+      <a href="/api/users/logout" style="text-decoration: none; color: #ff385c;">Logout</a>
+    {{else}}
+      <a href="/api/users/login" style="text-decoration: none; margin-right: 15px; color: #007bff;">Login</a>
+      <a href="/api/users/register" style="text-decoration: none; color: #28a745;">Register</a>
+    {{/if}}
+  </div>
+</nav>

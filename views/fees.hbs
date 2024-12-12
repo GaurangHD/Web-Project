@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <style>
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input[type="date"], input[type="number"], button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .cost-breakdown {
+      margin-top: 20px;
+    }
+    .cost-breakdown p {
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>{{title}}</h1>
+
+  {{#if totalCost}}
+    <div class="cost-breakdown">
+      <h3>Calculated Fees:</h3>
+      <p><strong>Total Cost:</strong> ${{totalCost}}</p>
+      <p><strong>Number of Nights:</strong> {{nights}}</p>
+      <p><strong>Start Date:</strong> {{startDate}}</p>
+      <p><strong>End Date:</strong> {{endDate}}</p>
+      <p><strong>Number of Guests:</strong> {{numberOfGuests}}</p>
+
+      <h4>Cost Breakdown:</h4>
+      <p><strong>Price per Night:</strong> ${{pricePerNight}}</p>
+      <p><strong>Cleaning Fee:</strong> ${{cleaningFee}}</p>
+      <p><strong>Security Deposit:</strong> ${{securityDeposit}}</p>
+      <p><strong>Extra People Fee:</strong> ${{extraPeopleFee}}</p>
+      <p><strong>Total Guests Fee:</strong> ${{guestFee}}</p>
+    </div>
+  {{else}}
+    <form action="/api/AirBnBs/fees/{{airbnb._id}}" method="POST">
+      <label for="startDate">Start Date:</label>
+      <input type="date" id="startDate" name="startDate" required>
+
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate" name="endDate" required>
+
+      <label for="numberOfGuests">Number of Guests:</label>
+      <input type="number" id="numberOfGuests" name="numberOfGuests" required>
+
+      <button type="submit">Calculate Fees</button>
+    </form>
+  {{/if}}
+</body>
+</html>

@@ -1,0 +1,125 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Airbnb Listing</title>
+  <style>
+    /* General Styles */
+    main {
+      padding: 20px;
+    }
+
+    form {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="number"], input[type="checkbox"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+    }
+
+    button[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 200px;
+      margin-top: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Edit Airbnb Listing</h1>
+    <form id="editForm" action="/api/AirBnBs/{{airbnb._id}}" method="post">
+      <!-- Section 1: Basic Information -->
+      <div>
+        <label for="listing_url">Listing URL:</label>
+        <input type="text" id="listing_url" name="listing_url" value="{{airbnb.listing_url}}" required>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{airbnb.name}}" required>
+
+        <label for="summary">Summary:</label>
+        <input type="text" id="summary" name="summary" value="{{airbnb.summary}}">
+      </div>
+
+      <!-- Section 2: Property Details -->
+      <div>
+        <label for="property_type">Property Type:</label>
+        <input type="text" id="property_type" name="property_type" value="{{airbnb.property_type}}">
+
+        <label for="room_type">Room Type:</label>
+        <input type="text" id="room_type" name="room_type" value="{{airbnb.room_type}}">
+
+        <label for="bed_type">Bed Type:</label>
+        <input type="text" id="bed_type" name="bed_type" value="{{airbnb.bed_type}}">
+
+        <label for="minimum_nights">Minimum Nights:</label>
+        <input type="number" id="minimum_nights" name="minimum_nights" value="{{airbnb.minimum_nights}}" required>
+
+        <label for="maximum_nights">Maximum Nights:</label>
+        <input type="number" id="maximum_nights" name="maximum_nights" value="{{airbnb.maximum_nights}}">
+      </div>
+
+      <!-- Section 3: Pricing & Host Information -->
+      <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" value="{{airbnb.price}}">
+
+        <label for="security_deposit">Security Deposit:</label>
+        <input type="number" id="security_deposit" name="security_deposit" value="{{airbnb.security_deposit}}">
+
+        <label for="cleaning_fee">Cleaning Fee:</label>
+        <input type="number" id="cleaning_fee" name="cleaning_fee" value="{{airbnb.cleaning_fee}}">
+
+        <label for="extra_people">Extra People:</label>
+        <input type="number" id="extra_people" name="extra_people" value="{{airbnb.extra_people}}">
+
+        <label for="guests_included">Guests Included:</label>
+        <input type="number" id="guests_included" name="guests_included" value="{{airbnb.guests_included}}">
+
+        <label for="host_name">Host Name:</label>
+        <input type="text" id="host_name" name="host[host_name]" value="{{airbnb.host.host_name}}" required>
+
+        <label for="host_location">Host Location:</label>
+        <input type="text" id="host_location" name="host[host_location]" value="{{airbnb.host.host_location}}">
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit">Save Changes</button>
+    </form>
+  </main>
+</body>
+</html>

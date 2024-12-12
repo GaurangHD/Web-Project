@@ -179,15 +179,20 @@ const {
   getAirBnBById,
   updateAirBnBById,
   deleteAirBnBById,
-  getAirBnBFeesById
+  getAirBnBFeesById,
+  renderaddpage,
+  rendereditpage 
 } = require("../controllers/airbnbController"); 
 
 router.post("/api/AirBnBs", addNewAirBnB);
 router.get("/api/AirBnBs", getAllAirBnBs);
+router.get("/api/AirBnBs/add", renderaddpage);
 router.get("/api/AirBnBs/:id", getAirBnBById);
-router.put("/api/AirBnBs/:id", updateAirBnBById);
+router.get("/api/AirBnBs/edit/:id", rendereditpage);
+router.post("/api/AirBnBs/:id", updateAirBnBById);
 router.delete("/api/AirBnBs/:id", deleteAirBnBById);
-router.get("/api/AirBnBs/fees/:id", getAirBnBFeesById);
+router.get('/api/AirBnbs/fees/:id', getAirBnBFeesById);
+router.post('/api/AirBnbs/fees/:id', getAirBnBFeesById);
 // router.get('*', (req, res) => {
 //   res.render('404');
 // });

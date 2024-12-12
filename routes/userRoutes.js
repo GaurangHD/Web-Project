@@ -9,6 +9,6 @@ router.get('/register', renderRegisterPage); // Render register page
 router.get('/login', renderLoginPage); // Render log
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.post('/logout', logoutUser);
+router.get('/logout', logoutUser);
 
 module.exports = router;

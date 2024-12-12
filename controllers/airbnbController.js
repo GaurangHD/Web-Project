@@ -103,6 +103,17 @@
 const AirBnB = require("../models/airbnbModel");
 const mongoose = require("mongoose");
 
+
+const renderaddpage = async(req,res)=>{
+  const userToken = res.locals.userToken;
+  if(userToken){
+
+    res.render('addlisting');
+  }
+  else{
+    res.redirect('/api/users/login');
+  }
+}
 // Add a new AirBnB
 const addNewAirBnB = async (req, res) => {
   try {
@@ -113,7 +124,7 @@ const addNewAirBnB = async (req, res) => {
     const airbnb = new AirBnB(airbnbData);
     // Save the document to the database
     const result = await airbnb.save();
-    res.status(201).json({ message: "AirBnB created successfully", airbnb: result });
+    res.redirect('/api/airbnbs');
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -173,34 +184,81 @@ const getAirBnBById = async (req, res) => {
 };
 
 
-// Controller method to get AirBnB fees
 const getAirBnBFeesById = async (req, res) => {
   try {
-    const id = req.params.id; // Extract the ID from request parameters
-    const airbnb = await AirBnB.findOne({ _id: id });  // Query based on the custom _id
+    const id = req.params.id;
+    const airbnb = await AirBnB.findOne({ _id: id });
+    
     if (!airbnb) {
       return res.status(404).json({ error: "AirBnB not found" });
     }
-    // Extract and return the necessary fee details
-    const feeDetails = {
-      price: airbnb.price,
-      cleaning_fee: airbnb.cleaning_fee,
-      security_deposit: airbnb.security_deposit,
-      accommodates: airbnb.accommodates,
-      extra_people: airbnb.extra_people,
-      guests_included: airbnb.guests_included,
-      bedrooms: airbnb.bedrooms,
-      beds: airbnb.beds,
-      street: airbnb.address ? airbnb.address.street : null // Make sure address exists
-    };
 
-    // Send the fee details in the response
-    res.status(200).json(feeDetails);
+    // Get form data from the request
+    const { startDate, endDate, numberOfGuests } = req.body;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const nights = (end - start) / (1000 * 3600 * 24);  // Calculate number of nights
+    
+    // Calculate the total costs
+    const pricePerNight = airbnb.price;
+    const totalPriceForNights = pricePerNight * nights;
+    const cleaningFee = airbnb.cleaning_fee;
+    const securityDeposit = airbnb.security_deposit;
+    
+    let extraPeopleFee = 0;
+    if (numberOfGuests > airbnb.guests_included) {
+      extraPeopleFee = (numberOfGuests - airbnb.guests_included) * airbnb.extra_people;
+    }
+    
+    const totalCost = totalPriceForNights + cleaningFee + securityDeposit + extraPeopleFee;
+    
+    res.render('fees', {
+      airbnb,
+      title: "Fee Calculation",
+      totalCost: totalCost,
+      nights: nights,
+      startDate: startDate,
+      endDate: endDate,
+      numberOfGuests: numberOfGuests,
+      pricePerNight: pricePerNight,
+      totalPriceForNights: totalPriceForNights,
+      cleaningFee: cleaningFee,
+      securityDeposit: securityDeposit,
+      extraPeopleFee: extraPeopleFee,
+      guestFee: airbnb.guests_included * airbnb.price // Optional: Show guest fees based on the number of guests
+    });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
+
+module.exports = {
+  getAirBnBFeesById,
+};
+
+
+
+const rendereditpage = async(req,res)=>{
+  const userToken = res.locals.userToken;
+  if(userToken){
+
+  
+  const airbnbId = req.params.id;
+  const airbnb = await AirBnB.findOne({ _id: airbnbId }); 
+  
+  if (!airbnb) {
+    return res.status(404).send('Airbnb not found');
+  }
+
+  res.render('editlisting', { airbnb });
+}
+else{
+  res.redirect('/api/users/login');
+}
+}
 // Update AirBnB by ID
 const updateAirBnBById = async (req, res) => {
     try {
@@ -210,7 +268,7 @@ const updateAirBnBById = async (req, res) => {
       return res.status(404).json({ error: "AirBnB not found" });
     }
     // Return the updated AirBnB document
-    res.status(200).json({ message: "AirBnB updated successfully", updatedAirBnB });
+    res.redirect('/api/airbnbs/');
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -219,6 +277,7 @@ const updateAirBnBById = async (req, res) => {
 
 // Delete AirBnB by ID
 const deleteAirBnBById = async (req, res) => {
+  
     try {
       const result = await AirBnB.findByIdAndDelete(req.params.id);
       // If no AirBnB document is found with the given _id, return a 404 error
@@ -231,6 +290,7 @@ const deleteAirBnBById = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+
 };
   
 
@@ -241,4 +301,6 @@ module.exports = {
   updateAirBnBById,
   deleteAirBnBById,
   getAirBnBFeesById,
+  renderaddpage,
+  rendereditpage
 };
